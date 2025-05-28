@@ -25,6 +25,9 @@ body {
 .track {
   stroke: var(--track-free);
 }
+.track.path {
+  stroke: var(--track-path);
+}
 
 .train-name,
 .station-name {
@@ -40,6 +43,9 @@ body {
   border-radius: 0.7em;
   background-color: #444;
   color: white;
+}
+.on-schedule {
+  text-decoration: underline;
 }
 
 .station-icon .fill {

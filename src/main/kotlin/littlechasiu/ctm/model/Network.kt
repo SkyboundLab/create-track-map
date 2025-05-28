@@ -31,14 +31,6 @@ data class Point(
 )
 
 @Serializable
-data class Path(
-  val start: Point,
-  val firstControlPoint: Point,
-  val secondControlPoint: Point,
-  val end: Point,
-)
-
-@Serializable
 data class Edge(
   val dimension: String,
   val path: List<Point>,
@@ -121,6 +113,42 @@ data class TrainCar(
 )
 
 @Serializable
+sealed class ScheduleInstruction(
+    val instructionType: String,
+)
+@Serializable
+data class ScheduleInstructionDestination(
+    val stationName : String,
+    val ticksToComplete : Int,
+) : ScheduleInstruction(instructionType = "Destination")
+
+@Serializable
+data class ScheduleInstructionThrottleChange(
+    val throttle : String,
+) : ScheduleInstruction(instructionType = "ThrottleChange")
+
+@Serializable
+data class ScheduleInstructionNameChange(
+    val newName : String,
+) : ScheduleInstruction(instructionType = "NameChange")
+
+@Serializable
+data class CreateSchedule(
+  val instructions: List<ScheduleInstruction>,
+  val cycling: Boolean,
+  val paused: Boolean,
+  val currentEntry: Int,
+  val ticksInTransit: Int,
+)
+
+@Serializable
+data class Path(
+    val path : List<Edge>,
+    val tripDistance : Double,
+    val distanceToDrive : Double
+)
+
+@Serializable
 data class CreateTrain(
   @Serializable(with = UUIDSerializer::class)
   val id: UUID,
@@ -129,7 +157,14 @@ data class CreateTrain(
   val cars: List<TrainCar>,
   val backwards: Boolean,
   val stopped: Boolean,
-)
+  val speed: Double,
+  val schedule: CreateSchedule?,
+  val currentPath: Path,
+){
+  companion object {
+    var enableNavigationTracks: Boolean = true
+  }
+}
 
 @Serializable
 data class TrainStatus(

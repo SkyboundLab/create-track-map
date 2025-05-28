@@ -3,6 +3,7 @@ A fork which merges PRs:
 - https://github.com/jenchanws/create-track-map/pull/86
 - https://github.com/jenchanws/create-track-map/pull/80
 - https://github.com/jenchanws/create-track-map/pull/62
+- https://github.com/jenchanws/create-track-map/pull/74
 
 <!-- modrinth_exclude.start -->
 
