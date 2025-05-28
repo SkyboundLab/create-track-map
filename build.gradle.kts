@@ -1,11 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-  kotlin("jvm") version "1.8.10"
-  kotlin("plugin.serialization") version "1.8.10"
+  kotlin("jvm") version "2.1.0"
+  kotlin("plugin.serialization") version "2.1.0"
   java
-  id("fabric-loom") version "1.1-SNAPSHOT"
-  id("com.github.johnrengelman.shadow") version "7.1.2"
+  id("fabric-loom") version "1.9.2"
+  id("com.github.johnrengelman.shadow") version "8.1.1"
   id("com.modrinth.minotaur") version "2.+"
 }
 
@@ -56,7 +56,6 @@ dependencies {
   shadowDep("io.ktor:ktor-server-core-jvm:$ktor_version")
   shadowDep("io.ktor:ktor-server-cio-jvm:$ktor_version")
   shadowDep("io.ktor:ktor-server-cors-jvm:$ktor_version")
-  shadowDep("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_json_version")
   shadowDep("org.jetbrains.kotlin-wrappers:kotlin-css:$kotlin_css_version")
 }
 
@@ -97,6 +96,15 @@ tasks {
       exclude(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-.*"))
       exclude(dependency("org.slf4j:.*"))
     }
+
+    fun relocate(origin: String) = relocate(origin, "littlechasiu.ctm.dependencies.$origin")
+    relocate("com.typesafe.config")
+    relocate("org.fusesource.jansi")
+    relocate("kotlinx.css")
+    relocate("io.ktor")
+    relocate("org.intellij.lang.annotations")
+    relocate("org.jetbrains.annotations")
+
     configurations = listOf(shadowDep)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   }
@@ -119,6 +127,10 @@ java {
   }
 }
 
+kotlin {
+
+}
+
 val modrinth_id: String by project
 
 modrinth {
@@ -130,9 +142,9 @@ modrinth {
   loaders.add("fabric")
   loaders.add("quilt")
   dependencies {
-    required.project("create-fabric")
-    required.project("fabric-api")
-    required.project("fabric-language-kotlin")
+      required.project("create-fabric")
+      required.project("fabric-api")
+      required.project("fabric-language-kotlin")
   }
 
   uploadFile.set { tasks.remapJar.get().archiveFile }
