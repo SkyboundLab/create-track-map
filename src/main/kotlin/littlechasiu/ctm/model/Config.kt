@@ -27,8 +27,6 @@ data class TrackColors(
   val reserved: String = "pink",
   @EncodeDefault
   val free: String = "white",
-  @EncodeDefault
-  val path: String = "#2244FF",
 )
 
 @Serializable
@@ -142,10 +140,6 @@ data class Config @OptIn(ExperimentalSerializationApi::class) constructor(
   @SerialName("server_port")
   @EncodeDefault
   val serverPort: Int = 3876,
-  @SerialName("enable_navigation_tracks")
-  @EncodeDefault
-  val enableNavigationTracks: Boolean = true,
-
 
   @SerialName("map_style")
   @EncodeDefault
@@ -167,6 +161,5 @@ data class Config @OptIn(ExperimentalSerializationApi::class) constructor(
     "portals" to LayerConfig(label = "Portals"),
     "stations" to LayerConfig(label = "Stations"),
     "trains" to LayerConfig(label = "Trains"),
-    "trainPaths" to LayerConfig(label = "Train navigation"),
   ),
 )

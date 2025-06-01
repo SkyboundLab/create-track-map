@@ -78,9 +78,6 @@ L.Control.List = L.Control.extend({
     el.addEventListener("click", (e) => {
       let [dimension, x, _, z] = e.target.dataset.coords.split(";")
       this.options.layerManager.switchToDimension(dimension)
-      if(this.options.itemClassName === "train" && !openTrainInfos[info.id]){
-        openTrainInfo(info)
-      }
       this._map.panTo([parseFloat(z), parseFloat(x)])
     })
 
@@ -94,7 +91,7 @@ L.Control.List = L.Control.extend({
 
     let el = Array.from(this._list.children).filter((e) => e.dataset.id === id)[0]
     if (!!el) {
-      //el.textContent = info.name
+      el.textContent = info.name
       el.dataset.coords = this.options.coordsFunction(info).join(";")
     }
   },
@@ -149,12 +146,8 @@ L.control.trainList = (layerManager) =>
     itemClassName: "train",
     tooltip: "Trains",
     coordsFunction: (t) => {
-      if(t.cars[0].leading) {
-        const c = t.cars[0].leading
-        return [c.dimension, c.location.x, c.location.y, c.location.z]
-      }else{
-        return ["minecraft:overworld",0,0,0]
-      }
+      const c = t.cars[0].leading
+      return [c.dimension, c.location.x, c.location.y, c.location.z]
     },
     layerManager,
   })

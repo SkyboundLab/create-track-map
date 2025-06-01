@@ -9,7 +9,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
 import littlechasiu.ctm.model.Config
-import littlechasiu.ctm.model.CreateTrain
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.loader.api.FabricLoader
@@ -78,7 +77,6 @@ object TrackMap {
     watcher.enable = config.enable
     server.enable = config.enable
     watcher.watchInterval = config.watchIntervalSeconds.seconds
-    CreateTrain.enableNavigationTracks = config.enableNavigationTracks
     server.port = config.serverPort
     server.mapStyle = config.mapStyle
     server.mapView = config.mapView
